@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Mini project (Thực hành JavaScript)</h1>
+    <script>
+        let count = 0;
+        while (count < 3) {
+            let account = prompt("Nhập tài khoản");
+            let password = prompt("Nhập mật khẩu");
+            if (account === "admin" && password === "12345") {
+                console.log("Đăng nhập thành công");
+                break;
+            } else {
+                console.log(`Sai mật khẩu lần thứ ${count + 1}`);
+                count++;
+            }
+        }
+        if (count === 3) {
+            console.log("Hệ thống bị khóa");
+        } else {
+            let choice;
+            do {
+                choice = +prompt(`
+                1. Phân loại mã số sách
+                2. Thiết kế bản đồ kho sách 
+                3. Dự toán phí bảo trì sách theo năm
+                4. Tìm mã số sách may mắn
+                5. Thoát
+                Vui lòng nhập lựa chọn của bạn ( 1-5 ):
+                `);
+                switch (choice) {
+                    case 1:
+                        let totalCodes = 0, evenCount = 0, oddCount = 0;
+                        let code;
+                        do {
+                            code = parseInt(prompt("Nhập mã số sách (Nhập 0 để dừng):"));
+                            if (!isNaN(code) && code !== 0) {
+                                totalCodes++;
+                                if (code % 2 === 0) evenCount++; else oddCount++;
+                            }
+                        } while (code !== 0);
+                        console.log(`
+                        Thống kê:
+                        - Tổng: ${totalCodes}
+                        - Sách KH (Chẵn): ${evenCount}
+                        - Sách NT (Lẻ): ${oddCount}
+                        `);
+                        break;
+                    case 2:
+                        let rows = parseInt(prompt("Nhập số Hàng:"));
+                        let cols = parseInt(prompt("Nhập số Cột:"));
+                        let result = "--- SƠ ĐỒ KHO ---\n";
+                        for (let i = 1; i <= rows; i++) {
+                            for (let j = 1; j <= cols; j++) {
+                                result += (i === j) ? `[${i}-${j}](Kệ ưu tiên) ` : `[${i}-${j}] `;
+                            }
+                            result += "\n";
+                        }
+                        console.log(result);
+                        alert("Đã xuất sơ đồ ra Console (F12)");
+                        break;
+                    case 3:
+                        let qty = parseInt(prompt("Số lượng sách:"));
+                        let fee = parseFloat(prompt("Phí bảo trì hiện tại:"));
+                        let years = parseInt(prompt("Số năm dự toán:"));
+                        console.log("--- BẢNG DỰ TOÁN PHÍ ---");
+                        for (let y = 1; y <= years; y++) {
+                            console.log(`Năm ${y}: ${(qty * fee).toLocaleString()} VNĐ`);
+                            fee *= 1.1;
+                        }
+                        alert("Đã xem dự toán tại Console.");
+                        break;
+                    case 4:
+                        let N = parseInt(prompt("Nhập giới hạn N:"));
+                        let lucky = [];
+                        for (let i = 1; i <= N; i++) {
+                            if (i % 3 === 0 && i % 5 !== 0) lucky.push(i);
+                        }
+                        alert(`Có ${lucky.length} mã may mắn: ${lucky.join(", ")}`);
+                        break;
+                    case 5:
+                        console.log("Thoát chương trình");
+                        break;
+                    default:
+                        console.log("Lựa chọn không hợp lệ");
+                        break;
+                }
+            } while (choice !== 5)
+        }
+    </script>
+</body>
+
+</html>
